@@ -25,16 +25,16 @@
 
 }
 
-/* #filter-bar {
+#filter-bar {
   background-color: lightgray;
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
   box-shadow: 1px 3px 4px grey;
-}  */
+} 
 
-/* #season-select {
+#season-select {
   padding: 0.25rem;
   border-radius: 0.25rem;
   margin-left: 2rem;
-} */
+}

@@ -33,12 +33,6 @@ export const DecorationStation = () => {
 
     const seasonItems = items.filter((item) => item.seasonId === seasonChoice)
 
-    // if (seasonChoice === 0) {
-    //   setFilteredItems(items)
-    // } else {
-    //   setFilteredItems(seasonItems)
-    // }
-
     seasonChoice === 0 ? setFilteredItems(items) : setFilteredItems(seasonItems)
          
   }, [seasonChoice, items])
