@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import './DecorationStation.css'
+import { NewDecorationForm } from './NewDecorationForm'
+import { SeasonsFilter } from './SeasonsFilter'
+import { ItemsList } from './ItemsList'
 
 export const DecorationStation = () => {
 
@@ -8,6 +11,7 @@ export const DecorationStation = () => {
   const [seasons, setSeasons] = useState([])
   const [filteredItems, setFilteredItems] = useState([])
   const [seasonChoice, setSeasonChoice] = useState(0)
+
 
   // useEffect hook watches for state change
   // it takes two arguments, a function and an array
@@ -40,61 +44,9 @@ export const DecorationStation = () => {
 
   return (
     <>
-      <div id="filter-bar">
-        <select
-          className="filter-box"
-          id="season-select"
-          onChange={(event) => {
-            setSeasonChoice(parseInt(event.target.value))
-          }}
-        >
-          <option key="0" value="0">
-            All Seasons
-          </option>
-
-          {seasons.map((season) => {
-            return (
-              <option key={season.id} value={season.id}>
-                {season.name}
-              </option>
-            )
-          })}
-        </select>
-      </div>
-
-    <div className="item-container">
-        {filteredItems.map((item) => {
-          return (
-            <div key={item.id} className="item-card">
-              <img
-                src={item.imageUrl}
-                alt={item.name}
-                className="item-img"
-                onClick={() => 
-                  window.alert(`You clicked the ${item.name} image`)
-                }
-              />
-              <div className="item-name">{item.name}</div>
-            </div>
-          )
-        })}
-      </div>
-
-
-      {/* <div className="item-container">
-        {filteredItems.map((item) => {
-          return (
-            <div key={item.id} className="item-card">
-              <img
-                src={item.imageUrl}
-                alt={item.name}
-                className="item-img"
-              ></img>
-              <div className="item-name">{item.name}</div>
-            </div>
-          )
-        })}
-      </div> */}
+      <NewDecorationForm seasons={seasons} setItems={setItems} />
+      <SeasonsFilter seasons={seasons} setSeasonChoice={setSeasonChoice} />
+      <ItemsList filteredItems={filteredItems} />
     </>
   )
 }

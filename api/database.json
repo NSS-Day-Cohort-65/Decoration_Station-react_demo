@@ -132,6 +132,13 @@
       "imageUrl": "https://images.kirklands.com/is/image/Kirklands/277008?hei=300&qlt=85,1&wid=300&fmt=jpeg&resMode=bicub&op_sharpen=1",
       "seasonId": 2,
       "categoryId": 1
+    },
+    {
+      "name": " thanksgiving plates ",
+      "imageUrl": "https://secure.img1-cg.wfcdn.com/im/38410576/resize-h445%5Ecompr-r85/9584/95847816/Turkey+11%22+Round+Dinner+Plate.jpg",
+      "seasonId": 3,
+      "categoryId": 4,
+      "id": 20
     }
   ],
   "seasons": [
