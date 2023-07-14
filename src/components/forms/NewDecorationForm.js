@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const NewDecorationForm = ({
-  seasons,
-  setItems
+ 
 }) => {
+  const [seasons, setSeasons] = useState([])
   const [categories, setCategories] = useState([])
   const [userChoices, setUserChoices] = useState({
     name: '',
@@ -12,12 +13,21 @@ export const NewDecorationForm = ({
     categoryId: ''
   })
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     fetch('http://localhost:8088/categories')
       .then((res) => res.json())
       .then((categoriesData) => {
         setCategories(categoriesData)
       })
+
+    fetch('http://localhost:8088/seasons')
+      .then((res) => res.json())
+      .then((seasonsData) => {
+        setSeasons(seasonsData)
+      })
+
   }, [])
 
   const handleSaveDecoration = (evt) => {
@@ -36,21 +46,9 @@ export const NewDecorationForm = ({
         },
         body: JSON.stringify(userChoices),
       })
-        .then((res) => res.json())
-        .then(() => {
-          fetch('http://localhost:8088/items')
-            .then((res) => res.json())
-            .then((itemsData) => {
-              setItems(itemsData)
-              setUserChoices({
-                name: '',
-                imageUrl: '',
-                seasonId: 0,
-                categoryId: 0,
-              })
-            })
-        })
-      : window.alert("Please finish filling out the form")
+      .then(
+        navigate("/items")
+      ) : window.alert("Please finish filling out the form")
   }
 
   return (
