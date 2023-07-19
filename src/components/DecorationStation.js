@@ -8,6 +8,7 @@ import { HalloweenItems } from './items/HalloweenList'
 import { ChristmasItems } from './items/ChristmasList'
 import { ThanksgivingItems } from './items/ThanksgivingList'
 import { ItemDetails } from './items/ItemDetails'
+import { EditDecoration } from './forms/EditDecoration'
 
 export const DecorationStation = () => {
   return (
@@ -27,6 +28,7 @@ export const DecorationStation = () => {
         <Route path="christmas" element={<ChristmasItems />} />
         <Route path="thanksgiving" element={<ThanksgivingItems />} />
         <Route path="new" element={<NewDecorationForm />} />
+        <Route path="items/:itemId/edit" element={<EditDecoration />} />
       </Route>
     </Routes>
   )
@@ -38,5 +40,3 @@ export const DecorationStation = () => {
 //JavaScript returns html and paints the UI
 //runs every useEffect
 //rerender again if you make state changes in your useEffects
-
-{/* <Route path=":itemId" element={<ItemDetails />} /> */ }

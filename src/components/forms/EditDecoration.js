@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-export const NewDecorationForm = ({
+export const EditDecoration = ({
  
 }) => {
   const [seasons, setSeasons] = useState([])
   const [categories, setCategories] = useState([])
-  const [userChoices, setUserChoices] = useState({
+  const [item, setItem] = useState({
     name: '',
     imageUrl: '',
     seasonId: '',
     categoryId: ''
   })
+  const { itemId } = useParams()
 
   const navigate = useNavigate()
 
@@ -28,32 +29,36 @@ export const NewDecorationForm = ({
         setSeasons(seasonsData)
       })
 
+    fetch(`http://localhost:8088/items/${itemId}`)
+      .then((res) => res.json())
+      .then((itemObj) => {
+        setItem(itemObj)
+      })
   }, [])
 
-  const handleSaveDecoration = (evt) => {
-    evt.preventDefault()
+  const handleEditDecoration = (evt) => {
+    evt.preventDefault() 
 
-   
-      userChoices.name &&
-      userChoices.imageUrl &&
-      userChoices.seasonId &&
-      userChoices.categoryId
+      item.name &&
+      item.imageUrl &&
+      item.seasonId &&
+      item.categoryId
       ?
-      fetch('http://localhost:8088/items', {
-        method: 'POST',
+      fetch(`http://localhost:8088/items/${itemId}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userChoices),
+        body: JSON.stringify(item),
       })
       .then(
         navigate("/")
-      ) : window.alert("Please finish filling out the form")
+      ) 
+      : window.alert("Please finish filling out the form")
   }
 
   return (
     <form className="decoration-form">
-      <h2 className="decoration-form-title">Add a decoration to the catalog</h2>
       <fieldset>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
@@ -63,11 +68,11 @@ export const NewDecorationForm = ({
             type="text"
             className="form-control"
             placeholder="Item"
-            value={userChoices.name}
+            value={item.name}
             onChange={(event) => {
-              const copy = { ...userChoices }
+              const copy = { ...item }
               copy.name = event.target.value
-              setUserChoices(copy)
+              setItem(copy)
             }}
           />
         </div>
@@ -81,11 +86,11 @@ export const NewDecorationForm = ({
             type="text"
             className="form-control"
             placeholder="https://www.example.com"
-            value={userChoices.imageUrl}
+            value={item.imageUrl}
             onChange={(event) => {
-              const copy = { ...userChoices }
+              const copy = { ...item }
               copy.imageUrl = event.target.value
-              setUserChoices(copy)
+              setItem(copy)
             }}
           />
         </div>
@@ -100,11 +105,11 @@ export const NewDecorationForm = ({
                   <input
                     type="radio"
                     value={season.id}
-                    checked={userChoices.seasonId === season.id}
+                    checked={item.seasonId === season.id}
                     onChange={(event) => {
-                      const copy = { ...userChoices }
+                      const copy = { ...item }
                       copy.seasonId = parseInt(event.target.value)
-                      setUserChoices(copy)
+                      setItem(copy)
                     }}
                   />
                   {season.name}
@@ -124,11 +129,11 @@ export const NewDecorationForm = ({
                   <input
                     type="radio"
                     value={category.id}
-                    checked={userChoices.categoryId === category.id}
+                    checked={item.categoryId === category.id}
                     onChange={(event) => {
-                      const copy = { ...userChoices }
+                      const copy = { ...item }
                       copy.categoryId = parseInt(event.target.value)
-                      setUserChoices(copy)
+                      setItem(copy)
                     }}
                   />
                   {category.name}
@@ -141,10 +146,10 @@ export const NewDecorationForm = ({
       <button
         className="btn"
         onClick={(event) => {
-          handleSaveDecoration(event)
+          handleEditDecoration(event)
         }}
       >
-        Add Decoration
+        Submit Changes
       </button>
     </form>
   )

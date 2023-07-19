@@ -1,22 +1,18 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { HalloweenItems } from "./HalloweenList"
+import '../DecorationStation.css'
 
-export const ItemsList = ( ) => {
-    const [items, setItems] = useState([]) 
+export const ItemsList = () => {
+    const [items, setItems] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         fetch('http://localhost:8088/items')
-          .then((res) => res.json())
-          .then((itemsData) => {
-            setItems(itemsData)
-          })
-      }, []) 
-
-    // const navigateToItemDetails = (itemId) => {
-    //     navigate(`/${itemId}`)
-    //   }
+            .then((res) => res.json())
+            .then((itemsData) => {
+                setItems(itemsData)
+            })
+    }, [])
 
     return <div className="item-container">
         {items.map((item) => {
@@ -26,12 +22,9 @@ export const ItemsList = ( ) => {
                         src={item.imageUrl}
                         alt={item.name}
                         className="item-img"
-                        onClick={() => {
-                            // navigateToItemDetails(item.id)
-                            navigate(`/items/${item.id}`)
-                        }}
+                        onClick={() => navigate(`/items/${item.id}`)}
                     />
-                    <div className="item-name">{item.name}</div>
+                    <div>{item.name}</div>
                 </div>
             )
         })}
